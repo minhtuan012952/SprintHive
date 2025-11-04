@@ -1,59 +1,59 @@
-# TaskAgile
+Front-End (Vue.js)
 
-Open source task management tool built with Vue.js 2, Spring Boot 2, and MySQL 5.7+
+Switch to Vue 3 + Vite (optional, but modern).
 
-> This is the repository for the book [_Building applications with Spring 5 and Vue.js 2: A real-world practical guide to building a modern full-stack web application_](https://www.amazon.com/Building-applications-Spring-5-0-Vue-js-ebook/dp/B079X1VTST).
+Adopt Tailwind CSS for styling.
 
-## Local development setup
+Use dark/light themes with smooth transitions.
 
-### Prerequisites
+Replace bootstrap-style components with customized dashboard UI (rounded cards, shadows, gradients).
 
-- JDK8 - OpenJDK  Preferred
-- MySQL 5.7+
-- RabbitMQ 3.6+
-- GraphicMagick 1.3+
+Back-End (Spring Boot)
 
-### Database setup
+Keep structure, but rename packages:
 
-- Create database `task_agile`
-- Initialize database with scripts in `setup` folder
+com.taskagile → com.sprinthive
 
-### Add dev properties file
 
-- Create `src/main/resources/application-dev.properties` with the following settings to override the settings in `application.properties`.
+Update properties:
 
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/task_agile?useSSL=false
-spring.datasource.username=<your username>
-spring.datasource.password=<your password>
-```
+spring.datasource.url=jdbc:mysql://localhost:3306/sprinthive?useSSL=false
 
-## Commands
 
-- Use `mvn test` to run the tests of the back-end and the front-end
-- Use `mvn spring-boot:run` to start the back-end
-- Use `npm run serve` inside the `front-end` directory to start the front-end
-- Use `mvn install` to build both the front-end and the back-end
-- Use `java -jar target/app-0.0.1-SNAPSHOT.jar` to start the bundled application
+Rename the JAR artifact:
 
-## How to run application inside docker
+app-0.0.1-SNAPSHOT.jar → sprinthive-0.0.1.jar
 
-```bash
+Docker / Branding
+
+Update Dockerfile and commands:
+
 $ mvn clean package
-$ cp target/app-0.0.1-SNAPSHOT.jar docker/app.jar
-$ docker build -t taskagile:dev docker/
-```
+$ cp target/sprinthive-0.0.1.jar docker/app.jar
+$ docker build -t sprinthive:dev docker/
+$ docker run --rm --name sprinthive -e "SPRING_PROFILES_ACTIVE=dev" -p 8080:8080 -p 9000:9000 sprinthive
 
-### Start with dev profile locally
+Logo / Theme
 
-```bash
-$ docker run --rm --name taskagile -e "SPRING_PROFILES_ACTIVE=dev" -p 8080:8080 -p 9000:9000 taskagile
-```
+Colors: 🟢 #00C896 + dark gray background (#1F2937)
 
-### Start on server
+Typography: Inter / Poppins
 
-With active profiles `staging` and `docker`. Make sure `docker` is the last one in the list so that the settings in `evn.list` will be applied.
+Iconography: Feather or Lucide
 
-```bash
-$ docker run --rm --name taskagile --env-file ./docker/env.list -e "SPRING_PROFILES_ACTIVE=staging,docker" -p 8080:8080 -p 9000:9000 taskagile
-```
+🧱 3. Folder / Code Name Changes
+
+If you want a scriptable rename (Linux/Mac example):
+
+find . -type f -exec sed -i 's/taskagile/sprinthive/g' {} +
+find . -type f -exec sed -i 's/TaskAgile/SprintHive/g' {} +
+mv src/main/resources/taskagile src/main/resources/sprinthive
+
+💡 Final Overview
+
+Old Project: TaskAgile
+New Project: SprintHive
+Tech Stack: Vue.js 2 → optionally Vue 3 + Vite, Spring Boot 2, MySQL, RabbitMQ
+Style: Tailwind-based, clean dashboard, light/dark theme
+Docker Image: sprinthive:dev
+Port: 8080 backend / 9000 frontend
